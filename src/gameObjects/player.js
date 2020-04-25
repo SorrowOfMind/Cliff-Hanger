@@ -5,7 +5,7 @@ const player = {
     jumps: 0,
     allowedJumps: 2,
     dead: false,
-    jumpPower: 440,
+    jumpPower: 432,
 
     setPlayer(player) {
         player.setGravityY(this.gravity);
@@ -18,7 +18,7 @@ const player = {
         if (!this.dead && player.body.touching.down || (this.jumps > 0 && this.jumps < this.allowedJumps)) {
             if (player.body.touching.down) {
                 this.jumps = 0;
-                player.setVelocityX(0);
+                player.setVelocityX(3);
             }
             player.setVelocityY(this.jumpPower * -1);
             this.jumps++;

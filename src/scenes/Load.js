@@ -2,14 +2,20 @@ import sky from "../assets/images/sky.png";
 import clouds from "../assets/images/clouds.png";
 import sea from "../assets/images/sea.png";
 import farGrounds from "../assets/images/far-grounds.png";
+
 import starterPlatform from "../assets/images/starter-platform.png";
 import starterPlatformTop from "../assets/images/starter-platform-top.png";
+
 import player from "../assets/sprites/player.png";
 import playerJSON from "../assets/sprites/player.json";
+
 import rocky from "../assets/images/platform-rocky.png";
 import grassy from "../assets/images/platform-grassy.png";
 import rooty from "../assets/images/platform-rooty.png";
 import small from "../assets/images/platform-small.png";
+
+import gem from "../assets/sprites/gem.png";
+import gemFeedback from "../assets/sprites/gem-feedback.png";
 
 export default class Load extends Phaser.Scene {
     constructor() {
@@ -38,6 +44,17 @@ export default class Load extends Phaser.Scene {
 
         //player
         this.load.atlas('player', player, playerJSON);
+
+        //gem
+        this.load.spritesheet('gem', gem, {
+            frameWidth: 15,
+            frameHeight: 13
+        });
+
+        this.load.spritesheet('gem-feedback', gemFeedback, {
+            frameWidth: 34,
+            frameHeight: 34
+        });
       
     }
 
@@ -80,6 +97,22 @@ export default class Load extends Phaser.Scene {
             }),
             frameRate: 8,
             repeat: -1
+        });
+
+        this.anims.create({
+            key: 'gem',
+            frames: this.anims.generateFrameNumbers('gem'),
+            frameRate: 10,
+            yoyo: true,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key:'gem-feedback',
+            frames: this.anims.generateFrameNumbers('gem-feedback'),
+            frameRate: 8,
+            repeat: 0,
+            hideOnComplete: true
         });
 
         this.scene.start('gameplay');
