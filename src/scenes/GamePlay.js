@@ -3,6 +3,11 @@ import player from "../gameObjects/player";
 import platform from "../gameObjects/platforms";
 import gem from "../gameObjects/gem";
 import gemFeedback from '../gameObjects/gemFeedback';
+import deathFeedback from '../gameObjects/deathFeedback';
+import frog from '../gameObjects/frog';
+import panel from "../gameObjects/panel";
+import scoreHandler from "../gameObjects/score";
+import timer from "../gameObjects/timer";
 
 import * as myFunct from '../utils/functions';
 
@@ -92,29 +97,58 @@ export default class GamePlay extends Phaser.Scene {
                 callbackScope: this,
                 onComplete: () => {
                     new gemFeedback(this, 300, gem.y + 3);
-                    // scoreManager.incrementScore();
-                    // let scoreFormat = scoreManager.addZeros(scoreManager.score, 6);
-                    // this.scorePanel.text = `SCORE: ${scoreFormat}`;
+                    scoreHandler.incrementScore();
+                    let scoreFormat = scoreHandler.addZeros(scoreHandler.score, 6);
+                    this.score.text = `SCORE: ${scoreFormat}`;
                     this.gemGroup.killAndHide(gem);
                     this.gemGroup.remove(gem);
                 }
             });
         });
         
+        //group for active frogs
+        this.frogGroup = this.add.group({
+            removeCallback: frog => frog.scene.frogPool.add(frog)
+        });
+
+        //pool for pending frogs
+        this.frogPool = this.add.group({
+            removeCallback: frog => frog.scene.frogGroup.add(frog)
+        });
+
+         //frog collision
+         this.frogCollider = this.physics.add.overlap(this.player, this.frogGroup, (player,frog) => {
+            player.dead = true;
+            new deathFeedback(this, 300, player.y);
+            player.anims.play('die');
+            player.body.setVelocityY(-200);
+            player.setDepth(2);
+            this.physics.world.removeCollider(this.platformsCollider);
+            this.physics.world.removeCollider(this.frogCollider);
+            this.physics.world.removeCollider(this.gemCollider);
+            this.player.setCollideWorldBounds(false);
+        }, null, this);
 
         //first floating platform
         this.createPlatform(gameConfig.width + 30, 400, platform.choosePlatformType(), myFunct.random(0, this.platformPool.getLength()));
 
         //input
         this.input.on("pointerdown", () => player.jump(this.player), this);
+
+        //create panel for score and timer
+        panel.drawPanel(this);
+        scoreHandler.drawScore(this);
+
+        //timer
+        timer.drawTimePanel(this); 
+        timer.setTimer(this, () => timer.startCounting(this));
         
-  
     }
 
     createPlatform(x,y,type,nthPlatform) {
         let customPlatform;
         let customGem;
-        // let customFrog;
+        let customFrog;
 
         if(this.platformPool.getLength() >=6) {
            customPlatform = this.platformPool.getFirstNth(nthPlatform);
@@ -154,6 +188,31 @@ export default class GamePlay extends Phaser.Scene {
                 this.gemGroup.add(customGem);
             }
         }
+
+        if(myFunct.random(1,100) <= frog.frogChance && customPlatform.displayWidth > 150) {
+            if (this.frogPool.getLength()) {
+                customFrog = this.frogPool.getFirst();
+                if (customPlatform.displayWidth <= 200) {
+                    customFrog.x = x + customPlatform.displayWidth/2 - customFrog.displayWidth/2 + myFunct.random(0,10) - myFunct.random(0,10);
+                    customFrog.setScale(myFunct.randomPrecision(1,1.015))
+                } else {
+                    customFrog.x = x + customPlatform.displayWidth/2 - customFrog.displayWidth/2 + myFunct.random(0,15) - myFunct.random(0,15);
+                    customFrog.setScale(myFunct.randomPrecision(frog.frogScale[0], frog.frogScale[1]));
+                }
+                customFrog.y = y - customFrog.displayHeight;
+                customFrog.active = true;
+                customFrog.visible = true;
+                this.frogPool.remove(customFrog);
+            } else {
+            customFrog = this.physics.add.sprite(x + customPlatform.displayWidth/2 - 38, y - 22, 'frog').setOrigin(0,0);
+            customFrog.setImmovable(true);
+            customFrog.setVelocityX(platform.speed * -1);
+            customFrog.setScale(frog.frogScale[0]);
+            customFrog.setDepth(2);
+            customFrog.anims.play('frog');
+            this.frogGroup.add(customFrog);
+            }
+        }
     }
 
     spawnNextPlatform(mingap, gap) {
@@ -168,6 +227,13 @@ export default class GamePlay extends Phaser.Scene {
     }
 
     update() {
+
+         // game over
+        if(this.player.y > gameConfig.height){
+            this.scene.start("gameplay");
+            player.dead = false;
+        }
+
         this.nextGap = myFunct.random(platform.gapRange[0], platform.gapRange[1]);
         let minGap = gameConfig.width;
 
@@ -207,15 +273,12 @@ export default class GamePlay extends Phaser.Scene {
             }
         });
 
-        // if (minGap > this.nextGap) {
-        //     let randomHeight = myFunct.random(platform.yRange[0], platform.yRange[1]);
-        //     let nextPlatformY = platform.yInitial + randomHeight;
-        //     let minY = gameConfig.height * platform.verticalLimit[0];
-        //     let maxY = gameConfig.height * platform.verticalLimit[1];
-        //     let nextPlatformHeight = Phaser.Math.Clamp(nextPlatformY, minY, maxY);
-        //     this.createPlatform(gameConfig.width + this.nextGap + myFunct.random(50,120), nextPlatformHeight, platform.choosePlatformType(), myFunct.random(0, this.platformPool.getLength()));
-        // }
-
+        this.frogGroup.getChildren().forEach(frog => {
+            if (frog.x + frog.displayWidth < 0) {
+                this.frogGroup.killAndHide(frog);
+                this.frogGroup.remove(frog);
+            }
+        });
 
     }
 }

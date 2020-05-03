@@ -3,6 +3,9 @@ import clouds from "../assets/images/clouds.png";
 import sea from "../assets/images/sea.png";
 import farGrounds from "../assets/images/far-grounds.png";
 
+import menu from "../assets/images/menu.png";
+import c from "../assets/images/name.png";
+
 import starterPlatform from "../assets/images/starter-platform.png";
 import starterPlatformTop from "../assets/images/starter-platform-top.png";
 
@@ -17,6 +20,12 @@ import small from "../assets/images/platform-small.png";
 import gem from "../assets/sprites/gem.png";
 import gemFeedback from "../assets/sprites/gem-feedback.png";
 
+import death from "../assets/sprites/death.png";
+
+import frog from "../assets/sprites/frog.png";
+
+import pxlFont from "../assets/font/font.png";
+
 export default class Load extends Phaser.Scene {
     constructor() {
         super({
@@ -25,6 +34,10 @@ export default class Load extends Phaser.Scene {
     }
 
     preload() {
+        
+        //menu screen
+        this.load.image('menu', menu);
+        this.load.image('c', c);
         
         //bg
         this.load.image("sky", sky);
@@ -55,6 +68,18 @@ export default class Load extends Phaser.Scene {
             frameWidth: 34,
             frameHeight: 34
         });
+
+        this.load.spritesheet('frog', frog, {
+            frameWidth: 35,
+            frameHeight: 21
+        });
+
+        this.load.spritesheet('death', death, {
+            frameWidth: 56,
+            frameHeight: 52
+        });
+
+        this.load.bitmapFont("pxlFont", pxlFont, "./font.xml");
       
     }
 
@@ -115,6 +140,22 @@ export default class Load extends Phaser.Scene {
             hideOnComplete: true
         });
 
-        this.scene.start('gameplay');
+        this.anims.create({
+            key:'death',
+            frames: this.anims.generateFrameNumbers('death'),
+            frameRate: 8,
+            repeat: 0,
+            hideOnComplete: true
+        });
+
+        this.anims.create({
+            key: 'frog',
+            frames: this.anims.generateFrameNumbers('frog'),
+            frameRate: 4,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.scene.start('menu');
     }
 }

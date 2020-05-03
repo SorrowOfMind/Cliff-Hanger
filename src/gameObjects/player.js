@@ -10,7 +10,7 @@ const player = {
     setPlayer(player) {
         player.setGravityY(this.gravity);
         player.setScale(2);
-        player.setCollideWorldBounds(true);
+        player.setCollideWorldBounds(false);
         player.anims.play('jump');
     },
 
