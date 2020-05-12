@@ -9,11 +9,15 @@ export default class Load extends Phaser.Scene {
 
     create() {
         this.menu = this.add.tileSprite(0,0,0,0,'menu').setOrigin(0,0);
-        this.title = this.add.image(gameConfig.width/2,150,'c');
+        this.title = this.add.image(gameConfig.width/2,100,'c');
         this.title.setScale(0.8);
 
-        this.pressKeySign = this.add.bitmapText(gameConfig.width/2 - 95,280,'pxlFont', 'PRESS ANY KEY', 44);
+        this.pressKeySign = this.add.bitmapText(gameConfig.width/2 - 180,200,'pxlFont', 'PRESS ANY KEY TO START', 44);
         this.pressKeySign.tint = 0xf27b22;
+
+        this.playBox = this.add.image(gameConfig.width/2,gameConfig.height/2 + 100, 'game-play');
+        this.instruction = this.add.bitmapText(gameConfig.width/2 - 230, 415,'pxlFont', 'Use the right mouse key to jump/double jump.', 28);
+        this.instruction.tint = 0xf27b22;
 
         this.tweens.add({
             targets: this.pressKeySign,
@@ -24,7 +28,6 @@ export default class Load extends Phaser.Scene {
         })
 
         this.input.keyboard.on('keydown', this.startGameplay, this); 
-      
     }
     
     startGameplay() {

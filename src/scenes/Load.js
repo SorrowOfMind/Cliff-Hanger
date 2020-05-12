@@ -5,6 +5,10 @@ import farGrounds from "../assets/images/far-grounds.png";
 
 import menu from "../assets/images/menu.png";
 import c from "../assets/images/name.png";
+import gamePlay from "../assets/images/game-play.png";
+
+import gameOver from "../assets/images/game-over.png";
+import playAgain from "../assets/images/play-again.png";
 
 import starterPlatform from "../assets/images/starter-platform.png";
 import starterPlatformTop from "../assets/images/starter-platform-top.png";
@@ -80,6 +84,11 @@ export default class Load extends Phaser.Scene {
         });
 
         this.load.bitmapFont("pxlFont", pxlFont, "./font.xml");
+
+        //game over screen
+        this.load.image('game-over', gameOver);
+        this.load.image('game-play', gamePlay);
+        this.load.image('play-again', playAgain);
       
     }
 

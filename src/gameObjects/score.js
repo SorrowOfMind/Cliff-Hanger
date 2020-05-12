@@ -2,7 +2,7 @@ const scoreHandler = {
     score: 0,
 
     incrementScore() {
-        return this.score += 10;
+        this.score += 10;
     },
 
     addZeros(score, size) {

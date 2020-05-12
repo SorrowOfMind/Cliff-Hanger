@@ -97,11 +97,14 @@ export default class GamePlay extends Phaser.Scene {
                 callbackScope: this,
                 onComplete: () => {
                     new gemFeedback(this, 300, gem.y + 3);
-                    scoreHandler.incrementScore();
-                    let scoreFormat = scoreHandler.addZeros(scoreHandler.score, 6);
-                    this.score.text = `SCORE: ${scoreFormat}`;
                     this.gemGroup.killAndHide(gem);
                     this.gemGroup.remove(gem);
+                    console.log(scoreHandler.score)
+                    scoreHandler.incrementScore();
+                    console.log(scoreHandler.score)
+                    let scoreFormat = scoreHandler.addZeros(scoreHandler.score, 6);
+                    console.log(scoreHandler.score)
+                    this.score.text = `SCORE: ${scoreFormat}`;
                 }
             });
         });
@@ -230,7 +233,7 @@ export default class GamePlay extends Phaser.Scene {
 
          // game over
         if(this.player.y > gameConfig.height){
-            this.scene.start("gameplay");
+            this.scene.start('gameOver');
             player.dead = false;
         }
 

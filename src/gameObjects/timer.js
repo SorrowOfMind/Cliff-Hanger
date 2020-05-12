@@ -1,14 +1,19 @@
 const timer = {
-    intialTime: 150,
-    timePanel: 'TIMER: 2:30',
+    intialTime: 0,
+    timePanel: 'TIMER: 0:00',
+    timer,
 
     setTimer(scene, callback) {
-        scene.time.addEvent({
+        this.timer = scene.time.addEvent({
             delay: 1000,
             callback: callback,
             callbackScope: scene,
             loop: true
         })
+    },
+
+    stopTimer() {
+        this.timer.paused = true;
     },
 
     formatTime(secs) {
@@ -24,11 +29,14 @@ const timer = {
 
     startCounting(scene) {
         // console.log(this.intialTime)
-        if (this.intialTime <= 0)  {
-            this.initialTime = 150;
-        } else {
-            this.intialTime -=1;
-        }
+        // if (this.intialTime <= 0)  {
+        //     this.initialTime = 150;
+        // } else {
+        //     this.intialTime +=1;
+        // }
+        
+        this.intialTime +=1;
+
         this.timePanel = `TIMER: ${this.formatTime(this.intialTime)}`
         scene.timePanel.text = this.timePanel;
     }

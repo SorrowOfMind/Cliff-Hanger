@@ -13,6 +13,10 @@ const platform = {
     choosePlatformType() {
         let idx = random(0, this.type.length - 1);
         return this.type[idx];
+    },
+
+    speedUp() {
+        this.speed += 5;
     }
 }
 
