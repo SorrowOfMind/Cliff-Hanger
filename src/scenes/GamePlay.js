@@ -99,11 +99,11 @@ export default class GamePlay extends Phaser.Scene {
                     new gemFeedback(this, 300, gem.y + 3);
                     this.gemGroup.killAndHide(gem);
                     this.gemGroup.remove(gem);
-                    console.log(scoreHandler.score)
+                    // console.log(scoreHandler.score)
                     scoreHandler.incrementScore();
-                    console.log(scoreHandler.score)
+                    // console.log(scoreHandler.score)
                     let scoreFormat = scoreHandler.addZeros(scoreHandler.score, 6);
-                    console.log(scoreHandler.score)
+                    // console.log(scoreHandler.score)
                     this.score.text = `SCORE: ${scoreFormat}`;
                 }
             });
@@ -145,7 +145,6 @@ export default class GamePlay extends Phaser.Scene {
         //timer
         timer.drawTimePanel(this); 
         timer.setTimer(this, () => timer.startCounting(this));
-        
     }
 
     createPlatform(x,y,type,nthPlatform) {
@@ -230,10 +229,13 @@ export default class GamePlay extends Phaser.Scene {
     }
 
     update() {
-
          // game over
         if(this.player.y > gameConfig.height){
+            timer.initialTime = 0;
+            timer.timePanel = 'TIMER: 0:00',
+            player.dead = true;
             this.scene.start('gameOver');
+        } else {
             player.dead = false;
         }
 

@@ -1,4 +1,5 @@
 import gameConfig from "../config/gameConfig";
+import fadeAway from "../utils/fadeAway";
 
 export default class Load extends Phaser.Scene {
     constructor() {
@@ -19,6 +20,8 @@ export default class Load extends Phaser.Scene {
         this.instruction = this.add.bitmapText(gameConfig.width/2 - 230, 415,'pxlFont', 'Use the right mouse key to jump/double jump.', 28);
         this.instruction.tint = 0xf27b22;
 
+        fadeAway(this);
+
         this.tweens.add({
             targets: this.pressKeySign,
             duration: 1000,
@@ -27,7 +30,20 @@ export default class Load extends Phaser.Scene {
             yoyo: true
         })
 
-        this.input.keyboard.on('keydown', this.startGameplay, this); 
+        // this.input.keyboard.on('keydown', this.startGameplay, this);
+        this.input.keyboard.on('keydown', () => {
+            this.tweens.add({
+                targets: fadeAway(this),
+                alpha: {from: 0, to: 1},
+                ease: 'Linear',
+                duration: 500,
+                repeat: 0,
+                yoyo: false,
+                onComplete: () => {
+                    this.startGameplay();
+                }
+            });
+        }, this);
     }
     
     startGameplay() {
