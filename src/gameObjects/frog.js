@@ -1,5 +1,5 @@
 const frog = {
-    frogChance: 70,
+    frogChance: 60,
     frogScale: [1.05,1.1]
 }
 

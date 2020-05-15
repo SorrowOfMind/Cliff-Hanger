@@ -1,5 +1,5 @@
 const gem = {
-    gemChance: 50,
+    gemChance: 60,
     gemHeight: 100,
     gemScale: 2,
 }

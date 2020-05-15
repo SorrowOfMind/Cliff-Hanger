@@ -16,7 +16,7 @@ const platform = {
     },
 
     speedUp() {
-        this.speed += 5;
+        this.speed += 1;
     }
 }
 

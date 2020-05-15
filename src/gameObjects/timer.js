@@ -1,3 +1,5 @@
+import platform from './platforms';
+
 const timer = {
     initialTime: 0,
     timePanel: 'TIMER: 0:00',
@@ -30,13 +32,9 @@ const timer = {
 
     startCounting(scene) {
 
-        if (this.initialTime === 10) {
-            console.log('it is 10');
+        if (this.initialTime%30 === 0 && this.initialTime > 0) {
+            platform.speedUp();
         }
-        // if (this.stopped) {
-        //     this.initialTime = 0;
-        //     console.log(this.initialTime);
-        // }
 
         this.initialTime +=1;
 

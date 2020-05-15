@@ -8,6 +8,7 @@ import frog from '../gameObjects/frog';
 import panel from "../gameObjects/panel";
 import scoreHandler from "../gameObjects/score";
 import timer from "../gameObjects/timer";
+import musicConfig from "../config/musicConfig";
 
 import * as myFunct from '../utils/functions';
 
@@ -52,6 +53,10 @@ export default class GamePlay extends Phaser.Scene {
         this.player = this.physics.add.sprite(player.x, player.y, 'player');
         player.setPlayer(this.player);
 
+        //music
+        this.music = this.sound.add('music');
+        this.music.play(musicConfig);
+
         //starter platform - player collider
         this.starterPlatformCollider = this.physics.add.collider(this.player, this.starterPlatformGroup, () => {
             if (this.player.anims.getCurrentKey() === 'jump') {
@@ -74,7 +79,6 @@ export default class GamePlay extends Phaser.Scene {
             if (this.player.anims.getCurrentKey() === 'jump') {
                 this.player.anims.play('run');
                 this.player.setVelocityX(platform.speed);
-              
             }
         }, null, this);
 
@@ -121,9 +125,11 @@ export default class GamePlay extends Phaser.Scene {
 
          //frog collision
          this.frogCollider = this.physics.add.overlap(this.player, this.frogGroup, (player,frog) => {
+            this.deadSound = this.sound.add('dead-sound'); 
             player.dead = true;
             new deathFeedback(this, 300, player.y);
             player.anims.play('die');
+            this.deadSound.play();
             player.body.setVelocityY(-200);
             player.setDepth(2);
             this.physics.world.removeCollider(this.platformsCollider);
@@ -136,7 +142,7 @@ export default class GamePlay extends Phaser.Scene {
         this.createPlatform(gameConfig.width + 30, 400, platform.choosePlatformType(), myFunct.random(0, this.platformPool.getLength()));
 
         //input
-        this.input.on("pointerdown", () => player.jump(this.player), this);
+        this.input.on("pointerdown", () => player.jump(this.player,this), this);
 
         //create panel for score and timer
         panel.drawPanel(this);
@@ -152,7 +158,7 @@ export default class GamePlay extends Phaser.Scene {
         let customGem;
         let customFrog;
 
-        if(this.platformPool.getLength() >=6) {
+        if(this.platformPool.getLength() >=4) {
            customPlatform = this.platformPool.getFirstNth(nthPlatform);
            customPlatform.x = x;
            customPlatform.y = y;
@@ -233,7 +239,9 @@ export default class GamePlay extends Phaser.Scene {
         if(this.player.y > gameConfig.height){
             timer.initialTime = 0;
             timer.timePanel = 'TIMER: 0:00',
+            platform.speed = 200;
             player.dead = true;
+            this.music.stop();
             this.scene.start('gameOver');
         } else {
             player.dead = false;

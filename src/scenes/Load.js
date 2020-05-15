@@ -30,6 +30,12 @@ import frog from "../assets/sprites/frog.png";
 
 import pxlFont from "../assets/font/font.png";
 
+import gemSound from "../assets/sounds/gem.mp3";
+import jumpSound from "../assets/sounds/jump.mp3";
+import deadSound from "../assets/sounds/dead.mp3";
+import music from "../assets/sounds/music.mp3";
+import btn from "../assets/sounds/btn.wav";
+
 export default class Load extends Phaser.Scene {
     constructor() {
         super({
@@ -84,6 +90,13 @@ export default class Load extends Phaser.Scene {
         });
 
         this.load.bitmapFont("pxlFont", pxlFont, "./font.xml");
+
+        //audio files
+        this.load.audio('gem-sound', gemSound);
+        this.load.audio('jump-sound', jumpSound);
+        this.load.audio('dead-sound', deadSound);
+        this.load.audio('music', music);
+        this.load.audio('btn', btn);
 
         //game over screen
         this.load.image('game-over', gameOver);

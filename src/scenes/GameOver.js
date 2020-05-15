@@ -34,6 +34,7 @@ export default class GameOver extends Phaser.Scene {
             this.icon.anims.play('run');
             this.icon.x = this.playAgainSign.x - 170;
             this.icon.y = this.playAgainSign.y;
+          
         });
 
         this.playAgainSign.on('pointerout', () => {
@@ -42,6 +43,8 @@ export default class GameOver extends Phaser.Scene {
 
 
         this.playAgainSign.on("pointerdown", () => {
+            this.playAgainSound = this.sound.add('btn');
+            this.playAgainSound.play();
             this.tweens.add({
                 targets: fadeAway(this),
                 alpha: {from: 0, to: 1},

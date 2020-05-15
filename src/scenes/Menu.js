@@ -32,6 +32,8 @@ export default class Load extends Phaser.Scene {
 
         // this.input.keyboard.on('keydown', this.startGameplay, this);
         this.input.keyboard.on('keydown', () => {
+            this.pressKeySound = this.sound.add('btn');
+            this.pressKeySound.play();
             this.tweens.add({
                 targets: fadeAway(this),
                 alpha: {from: 0, to: 1},
