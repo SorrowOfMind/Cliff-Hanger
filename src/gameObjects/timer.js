@@ -31,7 +31,6 @@ const timer = {
     },
 
     startCounting(scene) {
-
         if (this.initialTime%30 === 0 && this.initialTime > 0) {
             platform.speedUp();
         }

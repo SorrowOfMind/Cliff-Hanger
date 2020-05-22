@@ -1,6 +1,7 @@
 import gameConfig from "../config/gameConfig";
 import scoreHandler from "../gameObjects/score";
 import fadeAway from "../utils/fadeAway";
+import {playerName} from '../../game';
 
 export default class GameOver extends Phaser.Scene {
     constructor() {
@@ -8,10 +9,26 @@ export default class GameOver extends Phaser.Scene {
             key: 'gameOver'
         });
         this.posX = gameConfig.width/2,
-        this.posY = gameConfig.height/2
+        this.posY = gameConfig.height/2,
+        this.url = 'http://localhost:3000/records'
     }
 
     create() {
+        let data = {
+            name: playerName,
+            score: scoreHandler.score
+        }
+
+        if (scoreHandler.score !== 0) {
+            fetch(this.url, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            }).then(resp => resp.json())
+        }
+
         this.menu = this.add.tileSprite(0, 0, 0, 0, 'menu').setOrigin(0,0);
         this.gameOver = this.add.image(this.posX,this.posY, 'game-over');
 

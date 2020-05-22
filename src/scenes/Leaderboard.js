@@ -20,7 +20,11 @@ export default class Leaderboard extends Phaser.Scene {
             console.log(this.scores)
             for (let i = 1; i < 6; i++) {
                 if (this.scores[i-1]) {
-                    this.add.bitmapText(this.posX - 155, this.posY - 70 + i*30, 'pxlFont', `    ${i}                  ${scoreHandler.addZeros(this.scores[i-1].score, 6)}                ${this.scores[i-1].name}`, 26);
+                    if (i === 1) {
+                        this.add.bitmapText(this.posX - 155, this.posY - 70 + i*30, 'pxlFont', `    ${i}                   ${scoreHandler.addZeros(this.scores[i-1].score, 6)}              ${this.scores[i-1].name}`, 26);
+                    } else {
+                        this.add.bitmapText(this.posX - 155, this.posY - 70 + i*30, 'pxlFont', `    ${i}                  ${scoreHandler.addZeros(this.scores[i-1].score, 6)}              ${this.scores[i-1].name}`, 26);
+                    }
                 } else {
                     this.add.bitmapText(this.posX - 155, this.posY - 70 + i*30, 'pxlfont', `    ${i}                   0               ---`, 26);
                 }

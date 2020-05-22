@@ -1,29 +1,39 @@
 {
-    "records": [
-      {
-        "id": 1 ,
-        "name": "anon" ,
-        "score": 100
-      },
-      {
-          "id": 2,
-          "name": "me",
-          "score": 120
-      },
-      {
-          "id": 3,
-          "name": "nobody",
-          "score": 1000
-      },
-      {
-        "id": 4,
-        "name": "test",
-        "score": 1010
-      },
-     {
-        "id": 5,
-        "name": "test2",
-        "score": 700
-     }
-    ]
+  "records": [
+    {
+      "id": 1,
+      "name": "anon",
+      "score": 100
+    },
+    {
+      "id": 2,
+      "name": "me",
+      "score": 120
+    },
+    {
+      "id": 3,
+      "name": "nobody",
+      "score": 1000
+    },
+    {
+      "id": 4,
+      "name": "test",
+      "score": 1040
+    },
+    {
+      "name": "basia",
+      "score": 70,
+      "id": 5
+    },
+    {
+      "name": "",
+      "score": 80,
+      "id": 6
+    },
+    {
+      "name": "basia",
+      "score": 160,
+      "id": 7
+    }
+  ]
 }

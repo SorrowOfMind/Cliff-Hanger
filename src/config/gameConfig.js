@@ -10,7 +10,7 @@ const gameConfig = {
     width: 1350,
     height: 650,
     scene: [Load, Menu, GamePlay, GameOver, Leaderboard],
-    backgroundColor: 0xfffff,
+    backgroundColor: 0x171717,
     pixelArt: true,
     physics: {
         default: 'arcade',
