@@ -6,19 +6,19 @@ export default class Load extends Phaser.Scene {
         super({
             key: 'menu'
         });
+        this.posX = gameConfig.width/2,
+        this.posY = gameConfig.height/2
     }
 
     create() {
-        this.menu = this.add.tileSprite(0,0,0,0,'menu').setOrigin(0,0);
-        this.title = this.add.image(gameConfig.width/2,100,'c');
+        this.menu = this.add.tileSprite(0, 0, 0, 0, 'menu').setOrigin(0,0);
+        this.title = this.add.image(this.posX, 100, 'title');
         this.title.setScale(0.8);
 
-        this.pressKeySign = this.add.bitmapText(gameConfig.width/2 - 180,200,'pxlFont', 'PRESS ANY KEY TO START', 44);
-        this.pressKeySign.tint = 0xf27b22;
+        this.pressKeySign = this.add.bitmapText(this.posX - 180,200,'pxlFont', 'PRESS ANY KEY TO START', 44).setTint(0xf27b22);
 
-        this.playBox = this.add.image(gameConfig.width/2,gameConfig.height/2 + 100, 'game-play');
-        this.instruction = this.add.bitmapText(gameConfig.width/2 - 230, 415,'pxlFont', 'Use the right mouse key to jump/double jump.', 28);
-        this.instruction.tint = 0xf27b22;
+        this.playBox = this.add.image(this.posX,this.posY + 100, 'game-play');
+        this.instruction = this.add.bitmapText(this.posX - 230, 415,'pxlFont', 'Use the right mouse key to jump/double jump.', 28);
 
         fadeAway(this);
 
@@ -30,7 +30,6 @@ export default class Load extends Phaser.Scene {
             yoyo: true
         })
 
-        // this.input.keyboard.on('keydown', this.startGameplay, this);
         this.input.keyboard.on('keydown', () => {
             this.pressKeySound = this.sound.add('btn');
             this.pressKeySound.play();
@@ -55,6 +54,4 @@ export default class Load extends Phaser.Scene {
     update() {
         this.menu.tilePositionX += 0.6;
     }
-
-
 }

@@ -4,7 +4,7 @@ import sea from "../assets/images/sea.png";
 import farGrounds from "../assets/images/far-grounds.png";
 
 import menu from "../assets/images/menu.png";
-import c from "../assets/images/name.png";
+import title from "../assets/images/name.png";
 import gamePlay from "../assets/images/game-play.png";
 
 import gameOver from "../assets/images/game-over.png";
@@ -29,6 +29,7 @@ import death from "../assets/sprites/death.png";
 import frog from "../assets/sprites/frog.png";
 
 import pxlFont from "../assets/font/font.png";
+import pxlXml from "../assets/font/font.xml";
 
 import gemSound from "../assets/sounds/gem.mp3";
 import jumpSound from "../assets/sounds/jump.mp3";
@@ -47,7 +48,7 @@ export default class Load extends Phaser.Scene {
         
         //menu screen
         this.load.image('menu', menu);
-        this.load.image('c', c);
+        this.load.image('title', title);
         
         //bg
         this.load.image("sky", sky);
@@ -89,7 +90,7 @@ export default class Load extends Phaser.Scene {
             frameHeight: 52
         });
 
-        this.load.bitmapFont("pxlFont", pxlFont, "./font.xml");
+        this.load.bitmapFont("pxlFont", pxlFont, pxlXml);
 
         //audio files
         this.load.audio('gem-sound', gemSound);
@@ -102,7 +103,6 @@ export default class Load extends Phaser.Scene {
         this.load.image('game-over', gameOver);
         this.load.image('game-play', gamePlay);
         this.load.image('play-again', playAgain);
-      
     }
 
     create() {

@@ -1,0 +1,29 @@
+{
+    "records": [
+      {
+        "id": 1 ,
+        "name": "anon" ,
+        "score": 100
+      },
+      {
+          "id": 2,
+          "name": "me",
+          "score": 120
+      },
+      {
+          "id": 3,
+          "name": "nobody",
+          "score": 1000
+      },
+      {
+        "id": 4,
+        "name": "test",
+        "score": 1010
+      },
+     {
+        "id": 5,
+        "name": "test2",
+        "score": 700
+     }
+    ]
+}

@@ -1,10 +1,10 @@
 const musicConfig = {
     mute: false,
-    volume: 1,
+    volume: 0.4,
     detune: 0,
     rate: 1,
     seek: 0,
-    loop: false,
+    loop: true,
     delay: 0
 }
 
