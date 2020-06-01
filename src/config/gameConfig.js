@@ -4,7 +4,6 @@ import Menu from '../scenes/Menu';
 import GameOver from '../scenes/GameOver';
 import Leaderboard from '../scenes/Leaderboard';
 
-
 const gameConfig = {
     type: Phaser.AUTO,
     width: 1350,

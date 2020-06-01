@@ -22,18 +22,23 @@
     },
     {
       "name": "basia",
-      "score": 70,
+      "score": 20,
       "id": 5
     },
     {
-      "name": "",
-      "score": 80,
+      "name": "basia",
+      "score": 40,
       "id": 6
     },
     {
-      "name": "basia",
-      "score": 160,
+      "name": "gg",
+      "score": 20,
       "id": 7
+    },
+    {
+      "name": "gg",
+      "score": 40,
+      "id": 8
     }
   ]
 }
