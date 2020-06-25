@@ -2,6 +2,7 @@ import gameConfig from "../config/gameConfig";
 import scoreHandler from "../gameObjects/score";
 import fadeAway from "../utils/fadeAway";
 import {playerName} from '../../game';
+import firebase from '../config/firebaseConfig';
 
 export default class GameOver extends Phaser.Scene {
     constructor() {
@@ -10,7 +11,7 @@ export default class GameOver extends Phaser.Scene {
         });
         this.posX = gameConfig.width/2,
         this.posY = gameConfig.height/2,
-        this.url = 'http://localhost:3000/records'
+        this.db = firebase.firestore();
     }
 
     create() {
@@ -20,13 +21,7 @@ export default class GameOver extends Phaser.Scene {
         }
 
         if (scoreHandler.score !== 0) {
-            fetch(this.url, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(data),
-            }).then(resp => resp.json())
+            this.db.collection('records').add(data);
         }
 
         this.menu = this.add.tileSprite(0, 0, 0, 0, 'menu').setOrigin(0,0);

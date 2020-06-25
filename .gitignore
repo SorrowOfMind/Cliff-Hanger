@@ -27,4 +27,7 @@ node_modules/
 .solution
 
 .babelrc
-/dist
+/public
+/.firebase
+firebase.json
+.firebaserc
